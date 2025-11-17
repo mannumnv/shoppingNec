@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:63342")
+
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
@@ -20,6 +22,7 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<ProductDto> create(@RequestBody ProductDto dto) {
+        System.out.println("🔥 CREATE endpoint called!");
         ProductDto created = svc.createProduct(dto);
         return ResponseEntity.ok(created);
     }

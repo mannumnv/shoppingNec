@@ -8,7 +8,7 @@ public class ProductDto {
     private String name;
     private String category;
     private String description;
-    private List<com.nec.shoppingnec.dto.ProductModelDto> models = new ArrayList<>();
+    private List<ProductModelDto> models = new ArrayList<>();
 
     public ProductDto() {}
 
@@ -26,6 +26,6 @@ public class ProductDto {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    public List<com.nec.shoppingnec.dto.ProductModelDto> getModels() { return models; }
-    public void setModels(List<com.nec.shoppingnec.dto.ProductModelDto> models) { this.models = models; }
+    public List<ProductModelDto> getModels() { return models; }
+    public void setModels(List<ProductModelDto> models) { this.models = models; }
 }
