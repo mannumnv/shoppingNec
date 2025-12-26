@@ -9,6 +9,8 @@ public interface ProductService {
     ProductDto createProduct(ProductDto dto);
     ProductDto getProduct(Long id);
     List<ProductDto> listProducts();
-    ProductModelDto addModelToProduct(Long productId, ProductModelDto modelDto);
-    List<ProductModelDto> listModelsByProduct(Long productId);
+
+     void deleteProduct(Long id);
+    // ProductModelDto addModelToProduct(Long productId, ProductModelDto modelDto);
+   // List<ProductModelDto> listModelsByProduct(Long productId);
 }

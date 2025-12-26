@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto createProduct(ProductDto dto) {
-        Product product = new Product(dto.getName(), dto.getCategory(), dto.getDescription());
+        Product product = new Product(dto.getName(), dto.getModel(),dto.getCategory(), dto.getDescription());
         Product saved = productRepository.save(product);
         return toDto(saved);
     }
@@ -43,35 +43,41 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductModelDto addModelToProduct(Long productId, ProductModelDto modelDto) {
-        Product product = productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("Product not found"));
-        ProductModel model = new ProductModel(modelDto.getModelName(), modelDto.getPrice(), modelDto.getStock());
-        product.addModel(model);
-        productRepository.save(product); // cascades
-        return toModelDto(model);
+    public void deleteProduct(Long id) {
+         productRepository.deleteById(id);
     }
 
-    @Override
-    public List<ProductModelDto> listModelsByProduct(Long productId) {
-        return modelRepository.findByProductId(productId).stream().map(this::toModelDto).collect(Collectors.toList());
-    }
+//    @Override
+//    public ProductModelDto addModelToProduct(Long productId, ProductModelDto modelDto) {
+//        Product product = productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("Product not found"));
+//        ProductModel model = new ProductModel(modelDto.getModelName(), modelDto.getPrice(), modelDto.getStock());
+//        product.addModel(model);
+//        productRepository.save(product); // cascades
+//        return toModelDto(model);
+//    }
+
+//    @Override
+//    public List<ProductModelDto> listModelsByProduct(Long productId) {
+//        return modelRepository.findByProductId(productId).stream().map(this::toModelDto).collect(Collectors.toList());
+//    }
 
     private ProductDto toDto(Product p) {
         ProductDto dto = new ProductDto();
         dto.setId(p.getId());
         dto.setName(p.getName());
+        dto.setModel(p.getModel());
         dto.setCategory(p.getCategory());
         dto.setDescription(p.getDescription());
-        dto.setModels(p.getModels().stream().map(this::toModelDto).collect(Collectors.toList()));
+       // dto.setModels(p.getModels().stream().map(this::toModelDto).collect(Collectors.toList()));
         return dto;
     }
 
-    private ProductModelDto toModelDto(ProductModel m) {
-        ProductModelDto dto = new ProductModelDto();
-        dto.setId(m.getId());
-        dto.setModelName(m.getModelName());
-        dto.setPrice(m.getPrice());
-        dto.setStock(m.getStock());
-        return dto;
-    }
+//    private ProductModelDto toModelDto(ProductModel m) {
+//        ProductModelDto dto = new ProductModelDto();
+//        dto.setId(m.getId());
+//        dto.setModelName(m.getModelName());
+//        dto.setPrice(m.getPrice());
+//        dto.setStock(m.getStock());
+//        return dto;
+//    }
 }

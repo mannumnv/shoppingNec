@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Management</title>
+
+    <style>
+        body {
+            background-image: url('/images/background1.jpg');
+            background-size: cover;
+            font-family: Arial;
+        }
+
+        h2 {
+        text-align: right;
+        margin-right: 130px;
+        }
+
+        .right-align {
+            display: flex;
+            justify-content: flex-end;
+            }
+
+        .box, .card {
+            background: rgba(255,255,255,0.95);
+            padding: 15px;
+            width: 400px;
+           margin-right: 20px;
+            margin-left: auto;
+
+            border-radius: 10px;
+           <!--  display: flex;
+            justify-content: flex-end; -->
+        }
+
+        .card {
+            box-shadow: 0 0 8px #aaa;
+
+        }
+
+
+        button {
+            padding: 8px;
+            width: 100%;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        /* ===== Loader ===== */
+        #loader {
+            display: none;
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ===== Toast ===== */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 12px;
+            border-radius: 5px;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        #toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @keyframes fadein {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        @keyframes fadeout {
+            from {opacity: 1;}
+            to {opacity: 0;}
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Create Product</h2>
+
+<div class="box">
+    <input id="name" placeholder="Name"><br><br>
+    <input id="category" placeholder="Category"><br><br>
+    <input id="model" placeholder="Model"><br><br>
+    <input id="description" placeholder="Description"><br><br>
+
+    <button onclick="createProduct()">Create</button>
+</div>
+
+<div class="box">
+    <!--  <button onclick="loadProducts()">Get Products</button> -->
+      <button onclick="openProductsTab()">Get Products</button>
+
+  </div>
+
+  <div id="loader"></div>
+
+  <div id="productList"></div>
+
+  <div id="toast"></div>
+
+  <script>
+      function showLoader() {
+          loader.style.display = "block";
+      }
+
+      function hideLoader() {
+          loader.style.display = "none";
+      }
+
+      function showToast(msg) {
+          toast.innerText = msg;
+          toast.className = "show";
+          setTimeout(() => toast.className = "", 3000);
+      }
+
+      function createProduct() {
+          showLoader();
+
+       const data = {
+      name: document.getElementById("name").value,
+      category: document.getElementById("category").value,
+      model: document.getElementById("model").value,
+      description: document.getElementById("description").value
+  };
+
+          fetch("/api/products", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data)
+          })
+          .then(res => res.json())
+          .then(() => {
+              hideLoader();
+              showToast("✅ Product created successfully");
+
+              name.value = "";
+              category.value = "";
+              model.value = "";
+              description.value = "";
+          });
+      }
+
+      function openProductsTab() {
+    window.open("/products", "_blank");
+}
+
+  </script>
+
+  </body>
+  </html>

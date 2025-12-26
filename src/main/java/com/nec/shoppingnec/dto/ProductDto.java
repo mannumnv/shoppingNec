@@ -6,9 +6,10 @@ import java.util.List;
 public class ProductDto {
     private Long id;
     private String name;
+    private String model;
     private String category;
     private String description;
-    private List<ProductModelDto> models = new ArrayList<>();
+   // private List<ProductModelDto> models = new ArrayList<>();
 
     public ProductDto() {}
 
@@ -26,6 +27,14 @@ public class ProductDto {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    public List<ProductModelDto> getModels() { return models; }
-    public void setModels(List<ProductModelDto> models) { this.models = models; }
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    //    public List<ProductModelDto> getModels() { return models; }
+//    public void setModels(List<ProductModelDto> models) { this.models = models; }
 }

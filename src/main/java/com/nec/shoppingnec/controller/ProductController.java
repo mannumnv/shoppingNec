@@ -31,25 +31,31 @@ public class ProductController {
     public ResponseEntity<List<ProductDto>> list() {
         return ResponseEntity.ok(svc.listProducts());
     }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<ProductDto> get(@PathVariable Long id) {
-        ProductDto dto = svc.getProduct(id);
-        return dto != null ? ResponseEntity.ok(dto) : ResponseEntity.notFound().build();
+   @DeleteMapping("/{id}")
+    public String deleteProduct(@PathVariable Long id) {
+        // Implementation for deleting a product by its ID
+       svc.deleteProduct(id);
+        return "Product with ID " + id + " deleted.";
     }
 
-    @PostMapping("/{id}/models")
-    public ResponseEntity<ProductModelDto> addModel(@PathVariable Long id, @RequestBody ProductModelDto modelDto) {
-        try {
-            ProductModelDto created = svc.addModelToProduct(id, modelDto);
-            return ResponseEntity.ok(created);
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.notFound().build();
-        }
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<ProductDto> get(@PathVariable Long id) {
+//        ProductDto dto = svc.getProduct(id);
+//        return dto != null ? ResponseEntity.ok(dto) : ResponseEntity.notFound().build();
+//    }
 
-    @GetMapping("/{id}/models")
-    public ResponseEntity<List<ProductModelDto>> listModels(@PathVariable Long id) {
-        return ResponseEntity.ok(svc.listModelsByProduct(id));
-    }
+//    @PostMapping("/{id}/models")
+//    public ResponseEntity<ProductModelDto> addModel(@PathVariable Long id, @RequestBody ProductModelDto modelDto) {
+//        try {
+//            ProductModelDto created = svc.addModelToProduct(id, modelDto);
+//            return ResponseEntity.ok(created);
+//        } catch (IllegalArgumentException ex) {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
+
+//    @GetMapping("/{id}/models")
+//    public ResponseEntity<List<ProductModelDto>> listModels(@PathVariable Long id) {
+//        return ResponseEntity.ok(svc.listModelsByProduct(id));
+//    }
 }
